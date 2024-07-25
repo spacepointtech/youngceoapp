@@ -1,3 +1,4 @@
+// Signup.dart With Wave Clipper
 // import 'package:flutter/material.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
 // import 'package:google_fonts/google_fonts.dart';
@@ -288,6 +289,7 @@
 //   }
 // }
 
+/*
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -591,3 +593,249 @@ class _PasswordInputBoxState extends State<PasswordInputBox> {
     return regex.hasMatch(password);
   }
 }
+*/
+
+// Signup.dart With Illustration
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+class SignUpScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false, // Avoid overflow when keyboard appears
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Spacer(flex: 2),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 20.0),
+                  child: SvgPicture.asset(
+                    'assets/signup.svg',
+                    height: 360,
+                  ),
+                ),
+              ),
+              Spacer(),
+              Text(
+                'Create Your Free Account',
+                style: GoogleFonts.poppins(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black.withOpacity(0.87),
+                ),
+              ),
+              SizedBox(height: 16),
+              // Email input field
+              InputBox(
+                icon: Icons.mail,
+                hintText: 'Email',
+              ),
+              SizedBox(height: 16),
+              // Password input field with criteria
+              PasswordInputBox(),
+              SizedBox(height: 16),
+              // Checkbox for policy agreement
+              Row(
+                children: [
+                  Checkbox(
+                    value: false, // Initialize with false
+                    onChanged: (value) {
+                      // Add your checkbox logic here
+                    },
+                  ),
+                  Text(
+                    'I agree with the policy of YCE',
+                    style: GoogleFonts.roboto(
+                      fontSize: 14,
+                      color: Colors.black.withOpacity(0.87),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 16),
+              // Get into your YCE Hub button
+              Center(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Add your signup functionality here
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      padding: EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                    child: Text(
+                      'Get into your YCE Hub',
+                      style: GoogleFonts.roboto(
+                        fontSize: 16,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Spacer(flex: 2),
+              // Already a Young CEO? Login prompt
+              Center(
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context); // Navigate back to previous screen
+                  },
+                  child: Text.rich(
+                    TextSpan(
+                      text: 'Already a Young CEO? ',
+                      style: GoogleFonts.roboto(
+                        fontSize: 14,
+                        color: Colors.black.withOpacity(0.60),
+                      ),
+                      children: [
+                        TextSpan(
+                          text: 'Log in',
+                          style: GoogleFonts.roboto(
+                            fontSize: 14,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Spacer(),
+            ],
+          ),
+        ),
+      ),
+      // Back button
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context); // Navigate back to previous screen
+          },
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+    );
+  }
+}
+
+class InputBox extends StatelessWidget {
+  final IconData icon;
+  final String hintText;
+
+  InputBox({required this.icon, required this.hintText});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 16.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(30.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 5.0,
+            offset: Offset(0, 5),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Icon(icon),
+          SizedBox(width: 16.0),
+          Expanded(
+            child: TextFormField(
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: hintText,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class PasswordInputBox extends StatefulWidget {
+  @override
+  _PasswordInputBoxState createState() => _PasswordInputBoxState();
+}
+
+class _PasswordInputBoxState extends State<PasswordInputBox> {
+  bool showPasswordCriteria = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 16.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(30.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 5.0,
+            offset: Offset(0, 5),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Icon(Icons.lock),
+              SizedBox(width: 16.0),
+              Expanded(
+                child: TextFormField(
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Password',
+                  ),
+                  onChanged: (value) {
+                    setState(() {
+                      showPasswordCriteria = !validatePassword(value);
+                    });
+                  },
+                ),
+              ),
+            ],
+          ),
+          if (showPasswordCriteria)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                'Password must have at least 6 characters, 1 uppercase, 1 number, and 1 special symbol.',
+                style: TextStyle(
+                  color: Colors.red,
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  bool validatePassword(String password) {
+    final regex =
+    RegExp(r'^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$');
+    return regex.hasMatch(password);
+  }
+}
+

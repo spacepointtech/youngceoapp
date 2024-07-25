@@ -1,3 +1,6 @@
+// forgetpassword.dart with Wave Clipper
+
+/*
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'login.dart'; // Import the login page
@@ -193,3 +196,173 @@ class InputBox extends StatelessWidget {
     );
   }
 }
+*/
+
+
+
+
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'login.dart'; // Import the login page
+
+class ForgetPasswordScreen extends StatefulWidget {
+  @override
+  _ForgetPasswordScreenState createState() => _ForgetPasswordScreenState();
+}
+
+class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
+  final TextEditingController emailController = TextEditingController();
+  bool emailNotFound = false; // To handle if email doesn't exist in the database
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false, // Avoid overflow when keyboard appears
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Spacer(flex: 2),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 20.0),
+                  child: SvgPicture.asset(
+                    'assets/forget_password.svg', // Your SVG illustration for forget password
+                    height: 360,
+                  ),
+                ),
+              ),
+              Spacer(),
+              Text(
+                'Forget Password?',
+                style: GoogleFonts.poppins(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black.withOpacity(0.87),
+                ),
+              ),
+              SizedBox(height: 16),
+              Text(
+                'Don\'t worry!! It occurs. Please enter the email address linked with your account.',
+                style: GoogleFonts.roboto(
+                  fontSize: 14,
+                  color: Colors.black.withOpacity(0.54),
+                ),
+              ),
+              SizedBox(height: 16),
+              // Email input field
+              InputBox(
+                controller: emailController,
+                icon: Icons.mail,
+                hintText: 'Email',
+              ),
+              SizedBox(height: 16),
+              if (emailNotFound) // Show error message if email doesn't exist
+                Text(
+                  'You\'re not a Young CEO! Please register yourself to become a Young CEO.',
+                  style: TextStyle(color: Colors.red),
+                ),
+              SizedBox(height: 16),
+              // Verify button
+              Center(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Add your verify functionality here
+                      // Set emailNotFound to true if email doesn't exist in database
+                      setState(() {
+                        emailNotFound = !isEmailInDatabase(emailController.text); // Example function to check email
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      padding: EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                    child: Text(
+                      'Verify',
+                      style: GoogleFonts.roboto(
+                        fontSize: 16,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Spacer(flex: 2),
+            ],
+          ),
+        ),
+      ),
+      // Back button
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => LoginScreen()), // Navigate to login screen
+            );
+          },
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+    );
+  }
+
+  bool isEmailInDatabase(String email) {
+    // Implement your logic to check if email exists in the database
+    // Return true if email exists, false otherwise
+    return false; // Example placeholder
+  }
+}
+
+class InputBox extends StatelessWidget {
+  final TextEditingController controller;
+  final IconData icon;
+  final String hintText;
+
+  InputBox({required this.controller, required this.icon, required this.hintText});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 16.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(30.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 5.0,
+            offset: Offset(0, 5),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Icon(icon),
+          SizedBox(width: 16.0),
+          Expanded(
+            child: TextFormField(
+              controller: controller,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: hintText,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
